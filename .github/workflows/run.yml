@@ -1,0 +1,39 @@
+name: File Benchmark - Gogram
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+  schedule:
+        - cron: '0 */3 * * *'
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.23'
+
+    - name: Run File Operations
+      env:
+          TG_API_ID: ${{ secrets.TG_API_ID }}
+          TG_API_HASH: ${{ secrets.TG_API_HASH }}
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_MESSAGE_LINK: ${{ secrets.TG_MESSAGE_LINK }}
+      run: go mod tidy && go run .
+
+    - uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "update benchmark results"
+        commit_options: "--no-verify"
+        repository: .
+        commit_user_name: AmarnathCJD
+        commit_user_email: 72609355+AmarnathCJD@users.noreply.github.com
+        commit_author: AmarnathCJD <72609355+AmarnathCJD+@users.noreply.github.com>
