@@ -106,8 +106,8 @@ func main() {
 		TimeTaken: time.Now().Unix() - startTime,
 	}
 
-	jsonBenchmark, _ := json.Marshal(benchmark)
-	fmt.Println(string(jsonBenchmark))
+	jsonBenchmark, _ := json.MarshalIndent(benchmark, "", "  ")
+	os.WriteFile("benchmark.json", jsonBenchmark, 0644)
 }
 
 func HumanizeBytes(size int64) string {
