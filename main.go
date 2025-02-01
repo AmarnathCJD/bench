@@ -25,7 +25,7 @@ type Benchmark struct {
 	Layer    int    `json:"layer"`
 	Download Entry  `json:"download"`
 	Upload   Entry  `json:"upload"`
-	FileSize string `json:"file_size"`
+	FileSize int64  `json:"file_size"`
 }
 
 func main() {
@@ -121,7 +121,7 @@ func main() {
 		EndTime:   time.Now().Unix(),
 	}
 
-	benchmark.FileSize = HumanizeBytes(message.File.Size)
+	benchmark.FileSize = fileSize
 
 	jsonBenchmark, _ := json.MarshalIndent(benchmark, "", "  ")
 	os.WriteFile("benchmark.json", jsonBenchmark, 0644)
