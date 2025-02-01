@@ -23,6 +23,7 @@ type Benchmark struct {
 	Layer    int    `json:"layer"`
 	Download Entry  `json:"download"`
 	Upload   Entry  `json:"upload"`
+	FileSize string `json:"file_size"`
 }
 
 func main() {
@@ -37,17 +38,24 @@ func main() {
 		APP_HASH     = os.Getenv("TG_API_HASH")
 		BOT_TOKEN    = os.Getenv("TG_BOT_TOKEN")
 		MESSAGE_LINK = os.Getenv("TG_MESSAGE_LINK")
+		TG_SESSION   = os.Getenv("TG_SESSION")
 	)
 
 	appIdInt, _ := strconv.Atoi(APP_ID)
 
-	client, _ := tg.NewClient(tg.ClientConfig{
+	cfg := tg.ClientConfig{
 		AppID:         int32(appIdInt),
 		AppHash:       APP_HASH,
 		LogLevel:      tg.LogInfo,
 		MemorySession: true,
 		DisableCache:  true,
-	})
+	}
+
+	if TG_SESSION != "" {
+		cfg.StringSession = TG_SESSION
+	}
+
+	client, _ := tg.NewClient(cfg)
 	client.LoginBot(BOT_TOKEN)
 	messageId, _ := strconv.Atoi(strings.Split(MESSAGE_LINK, "/")[4])
 	message, _ := client.GetMessageByID(strings.Split(MESSAGE_LINK, "/")[3], int32(messageId))
@@ -70,12 +78,13 @@ func main() {
 	downloaded, _ := message.Download(&tg.DownloadOptions{
 		ProgressManager: prog,
 	})
+	defer os.Remove(downloaded)
 
 	var avgSpeed = float64(fileSize) / float64(time.Now().Unix()-startTime)
 
 	benchmark.Download = Entry{
-		PeakSpeed: HumanizeBytes(peakSpeed),
-		AvgSpeed:  HumanizeBytes(int64(avgSpeed)),
+		PeakSpeed: HumanizeBytes(peakSpeed) + "/s",
+		AvgSpeed:  HumanizeBytes(int64(avgSpeed)) + "/s",
 		TimeTaken: time.Now().Unix() - startTime,
 	}
 
@@ -101,10 +110,12 @@ func main() {
 	avgSpeed = float64(fileSize) / float64(time.Now().Unix()-startTime)
 
 	benchmark.Upload = Entry{
-		PeakSpeed: HumanizeBytes(peakSpeed),
-		AvgSpeed:  HumanizeBytes(int64(avgSpeed)),
+		PeakSpeed: HumanizeBytes(peakSpeed) + "/s",
+		AvgSpeed:  HumanizeBytes(int64(avgSpeed)) + "/s",
 		TimeTaken: time.Now().Unix() - startTime,
 	}
+
+	benchmark.FileSize = HumanizeBytes(message.File.Size)
 
 	jsonBenchmark, _ := json.MarshalIndent(benchmark, "", "  ")
 	os.WriteFile("benchmark.json", jsonBenchmark, 0644)
@@ -117,5 +128,5 @@ func HumanizeBytes(size int64) string {
 		size = size / 1024
 		i++
 	}
-	return fmt.Sprintf("%.2f %s/s", float64(size), units[i])
+	return fmt.Sprintf("%.2f %s", float64(size), units[i])
 }
