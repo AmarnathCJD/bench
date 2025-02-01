@@ -16,6 +16,8 @@ type Entry struct {
 	PeakSpeed string `json:"peak_speed"`
 	AvgSpeed  string `json:"avg_speed"`
 	TimeTaken int64  `json:"time_taken"`
+	StartTime int64  `json:"start_time"`
+	EndTime   int64  `json:"end_time"`
 }
 
 type Benchmark struct {
@@ -86,6 +88,8 @@ func main() {
 		PeakSpeed: HumanizeBytes(peakSpeed) + "/s",
 		AvgSpeed:  HumanizeBytes(int64(avgSpeed)) + "/s",
 		TimeTaken: time.Now().Unix() - startTime,
+		StartTime: startTime,
+		EndTime:   time.Now().Unix(),
 	}
 
 	prog = tg.NewProgressManager(2)
@@ -113,6 +117,8 @@ func main() {
 		PeakSpeed: HumanizeBytes(peakSpeed) + "/s",
 		AvgSpeed:  HumanizeBytes(int64(avgSpeed)) + "/s",
 		TimeTaken: time.Now().Unix() - startTime,
+		StartTime: startTime,
+		EndTime:   time.Now().Unix(),
 	}
 
 	benchmark.FileSize = HumanizeBytes(message.File.Size)
