@@ -27,6 +27,7 @@ jobs:
           TG_API_HASH: ${{ secrets.TG_API_HASH }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_MESSAGE_LINK: ${{ secrets.TG_MESSAGE_LINK }}
+          TG_SESSION: ${{ secrets.TG_SESSION }}
       run: go mod tidy && go run .
 
     - uses: stefanzweifel/git-auto-commit-action@v5
