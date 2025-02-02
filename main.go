@@ -79,7 +79,7 @@ func main() {
 
 	downloaded, _ := message.Download(&tg.DownloadOptions{
 		ProgressManager: prog,
-		Threads: 20,
+		Threads: 2,
 	})
 	defer os.Remove(downloaded)
 
@@ -110,7 +110,7 @@ func main() {
 
 	client.UploadFile(downloaded, &tg.UploadOptions{
 		ProgressManager: prog,
-		Threads: 20,
+		Threads: 2,
 	})
 
 	avgSpeed = float64(fileSize) / float64(time.Now().Unix()-startTime)
