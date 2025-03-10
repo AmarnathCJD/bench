@@ -3,17 +3,17 @@
   "layer": 199,
   "download": {
     "peak_speed": "14.00 MB/s",
-    "avg_speed": "13.00 MB/s",
-    "time_taken": 130,
-    "start_time": 1741484196,
-    "end_time": 1741484326
+    "avg_speed": "14.00 MB/s",
+    "time_taken": 127,
+    "start_time": 1741570489,
+    "end_time": 1741570616
   },
   "upload": {
     "peak_speed": "17.00 MB/s",
     "avg_speed": "17.00 MB/s",
-    "time_taken": 104,
-    "start_time": 1741484326,
-    "end_time": 1741484430
+    "time_taken": 105,
+    "start_time": 1741570616,
+    "end_time": 1741570721
   },
   "file_size": 1890522081
 }
