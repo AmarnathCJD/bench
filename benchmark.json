@@ -2,18 +2,18 @@
   "version": "v1.5.5",
   "layer": 199,
   "download": {
-    "peak_speed": "16.00 MB/s",
-    "avg_speed": "15.00 MB/s",
-    "time_taken": 117,
-    "start_time": 1741658002,
-    "end_time": 1741658119
+    "peak_speed": "14.00 MB/s",
+    "avg_speed": "13.00 MB/s",
+    "time_taken": 131,
+    "start_time": 1741744334,
+    "end_time": 1741744465
   },
   "upload": {
-    "peak_speed": "17.00 MB/s",
-    "avg_speed": "14.00 MB/s",
-    "time_taken": 123,
-    "start_time": 1741658119,
-    "end_time": 1741658242
+    "peak_speed": "18.00 MB/s",
+    "avg_speed": "17.00 MB/s",
+    "time_taken": 103,
+    "start_time": 1741744465,
+    "end_time": 1741744568
   },
   "file_size": 1890522081
 }
